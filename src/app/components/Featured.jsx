@@ -1,7 +1,7 @@
 const Featured = () => {
     return (
         <div>
-            <h2 className="bg-amber-400">Featured</h2>
+            <h2 className="">Featured</h2>
         </div>
     );
 };

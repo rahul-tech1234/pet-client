@@ -1,7 +1,7 @@
 const Static = () => {
     return (
         <div>
-            <h1 className="bg-green-500 md:bg-amber-500">Static</h1>            
+            <h1 className="">Static</h1>            
         </div>
     );
 };
