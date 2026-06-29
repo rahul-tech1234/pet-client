@@ -1,9 +1,180 @@
-const AddPet = () => {
+'use client'
+import { Button } from "@heroui/react";
+export default function AddPet() {
+    const handleAddPet=async(e)=>{
+        e.preventDefault();
+        const formdata=new FormData(e.currentTarget);
+        const petData=Object.fromEntries(formdata.entries())
+        const res=await fetch('http://localhost:5000/pet',{
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(petData)
+        })
+        const data=await res.json();
+        console.log(data,'petdata clientside');
+    }
+   
     return (
-        <div>
-            <h2 className='bg-sky-500'>add-pet</h2>
-        </div>
-    );
-};
+    <section className="min-h-screen bg-gray-100 py-10 px-4">
+      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+        <h2 className="text-3xl font-bold text-center mb-8">
+          Add a New Pet
+        </h2>
 
-export default AddPet;
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-6" onSubmit={handleAddPet}>
+          {/* Pet Name */}
+          <div>
+            <label className="block mb-2 font-medium">Pet Name</label>
+            <input
+              type="text"
+              name="petName"
+              placeholder="Enter pet name"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Species */}
+          <div>
+            <label className="block mb-2 font-medium">Species</label>
+            <select
+              name="species"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option>Dog</option>
+              <option>Cat</option>
+              <option>Bird</option>
+              <option>Rabbit</option>
+              <option>Fish</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          {/* Breed */}
+          <div>
+            <label className="block mb-2 font-medium">Breed</label>
+            <input
+              type="text"
+              name="breed"
+              placeholder="Golden Retriever"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Age */}
+          <div>
+            <label className="block mb-2 font-medium">Age</label>
+            <input
+              type="number"
+              name="age"
+              placeholder="2"
+              min={1}
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Gender */}
+          <div>
+            <label className="block mb-2 font-medium">Gender</label>
+            <select
+              name="gender"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+
+          {/* Image URL */}
+          <div>
+            <label className="block mb-2 font-medium">Image URL</label>
+            <input
+              type="url"
+              name="image"
+              placeholder="https://i.ibb.co/..."
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Health Status */}
+          <div>
+            <label className="block mb-2 font-medium">Health Status</label>
+            <input
+              type="text"
+              name="health"
+              placeholder="Healthy"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Vaccination */}
+          <div>
+            <label className="block mb-2 font-medium">
+              Vaccination Status
+            </label>
+            <select
+              name="vaccination"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            >
+              <option>Vaccinated</option>
+              <option>Partially Vaccinated</option>
+              <option>Not Vaccinated</option>
+            </select>
+          </div>
+
+          {/* Location */}
+          <div>
+            <label className="block mb-2 font-medium">Location</label>
+            <input
+              type="text"
+              name="location"
+              placeholder="Sylhet, Bangladesh"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Adoption Fee */}
+          <div>
+            <label className="block mb-2 font-medium">Adoption Fee</label>
+            <input
+              type="number"
+              name="fee"
+              min={1}
+              placeholder="1000"
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Owner Email */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 font-medium">Owner Email</label>
+            <input
+              type="email"
+              name="ownerEmail"
+              value="user@example.com"
+              readOnly
+              className="w-full rounded-lg border bg-gray-100 px-4 py-3 cursor-not-allowed"
+            />
+          </div>
+
+          {/* Description */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 font-medium">Description</label>
+            <textarea
+              rows={5}
+              name="description"
+              placeholder="Write about the pet..."
+              className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            ></textarea>
+          </div>
+
+          {/* Submit */}
+          <div className="md:col-span-2">
+           <Button className='rounded-sm bg-linear-to-tr from-purple-500 to-blue-500 w-full'>Adopt</Button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}

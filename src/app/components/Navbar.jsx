@@ -3,13 +3,13 @@ import Image from "next/image";
 import logo from "../../../public/logo.png";
 import Navlink from "./Navlink";
 import {Bars} from '@gravity-ui/icons';import { useState } from "react";
-import {ChevronDown} from '@gravity-ui/icons';
-import { Button } from "@heroui/react";
-import {ArrowRightFromSquare} from '@gravity-ui/icons';
+import Link from "next/link";
+
 const Navbar = () => {
     const [mobile,setMobilte]=useState(false);
     const [isClick,setIsClick]=useState(false);
-    console.log(mobile,'mobile');
+     
+    //console.log(mobile,'mobile');
     const nablink=<>
     <li><Navlink href={'/'}>Home</Navlink></li>
                 <li><Navlink href={'/all-pets'}>All Pets</Navlink></li>
@@ -37,16 +37,25 @@ const Navbar = () => {
                 </ul>
                 </div>
                 <ul className="flex gap-5  ">
-                <li>
+                {/* <li>
                     <Button variant="outline" onClick={()=>setIsClick(!isClick)}>Profile <ChevronDown className="inline-block"/></Button>
 
                     <ul className={`${!isClick &&'hidden'} space-y-2 mt-2`}>
                         <li>Dashboard</li>
                         <li><ArrowRightFromSquare className="inline-block"/> Logout</li>
                     </ul>
-                </li>
+                </li> */}
                 {/* if not loged in */}
-                {/* <li>Login </li> */}
+                <li><Link href={'/logIn'}>Login</Link> </li>
+                
+
+
+
+
+
+
+                
+
             </ul>
             </div>
         </nav>

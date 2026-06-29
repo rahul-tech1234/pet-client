@@ -2,15 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 const Banner = () => {
     return (
-           <section className="relative bg-[url('https://images.unsplash.com/photo-1623387641168-d9803ddd3f35')] 
+           <section className="relative  
            bg-no-repeat  
            bg-cover
            bg-center  
            h-[100vh]"
            style={{
-            backgroundImage:
-            ` linear-gradient(to bottom right, rgba(249,115,22,.6), rgba(59,130,246,.6)),
-      url('https://images.unsplash.com/photo-1623387641168-d9803ddd3f35')`,
+              backgroundImage: `
+      linear-gradient(
+        to bottom right,
+        rgba(249,115,22,0.6),
+        rgba(59,130,246,0.6)
+      ),
+      url("https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?auto=format&fit=crop&w=1600&q=80")
+    `,
            }}>
       <div className=" max-w-7xl mx-auto px-6 py-16 lg:py-24">
         <div className="grid items-center gap-12">
