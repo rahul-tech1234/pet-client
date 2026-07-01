@@ -16,6 +16,7 @@ import {
   FaSyringe,
 } from "react-icons/fa";
 import { DetailsModal } from "./DetailsModal";
+import { useSession } from "@/lib/auth-client";
 export default function DetailsCard({ pet }) {
   const {
     image,
@@ -28,10 +29,12 @@ export default function DetailsCard({ pet }) {
     vaccination,
     location,
     fee,
-    ownerEmail,
     description
   } = pet;
-
+  //console.log(pet?._id)
+  const {data}=useSession();
+        const user=data?.user;
+//console.log(user?.email,'details')
   return (
     <Card className=" mx-auto rounded-3xl shadow-2xl border border-default-200">
       <div className="flex flex-col md:flex-row gap-2">
@@ -61,7 +64,7 @@ export default function DetailsCard({ pet }) {
               </p>
 
               <h3 className="font-semibold break-all">
-                {ownerEmail}
+                {user?.email}
               </h3>
             </div>
           </div>
@@ -176,17 +179,7 @@ export default function DetailsCard({ pet }) {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-2">
-            <DetailsModal pet={pet}></DetailsModal>
-            
-
-            <Button
-              variant="bordered"
-              size="lg"
-              radius="full"
-              className="w-full"
-            >
-              Contact Owner
-            </Button>
+            <DetailsModal  pet={pet}></DetailsModal>
 
           </div>
 

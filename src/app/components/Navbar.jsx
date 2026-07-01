@@ -2,12 +2,20 @@
 import Image from "next/image";
 import logo from "../../../public/logo.png";
 import Navlink from "./Navlink";
-import {Bars} from '@gravity-ui/icons';import { useState } from "react";
+import {ArrowRightFromSquare, Bars} from '@gravity-ui/icons';import { useState } from "react";
 import Link from "next/link";
-
+import { authClient, useSession } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
+import { ChevronDown } from "lucide-react";
 const Navbar = () => {
     const [mobile,setMobilte]=useState(false);
     const [isClick,setIsClick]=useState(false);
+    const {data}=useSession();
+    const user=data?.user;
+    //console.log(data?.user)
+    const handleLogOut=async()=>{
+        await authClient.signOut();
+    }
      
     //console.log(mobile,'mobile');
     const nablink=<>
@@ -15,6 +23,7 @@ const Navbar = () => {
                 <li><Navlink href={'/all-pets'}>All Pets</Navlink></li>
                 <li><Navlink href={'/my-rquest'}> My Requests</Navlink></li>
                 <li><Navlink href={'add-pet'}>Add Pet</Navlink></li>
+                <li><Navlink href={'/my-listing'}>My Listing</Navlink></li>
     </>;
     return (
         <nav className="flex justify-between items-center gap-5 my-5">
@@ -33,20 +42,41 @@ const Navbar = () => {
                 <div className="hidden md:block">
                     <ul className=" flex gap-5">
                 {nablink}
-                {/* if loged in */}
+                
                 </ul>
                 </div>
+                {/* if loged in */}
                 <ul className="flex gap-5  ">
-                {/* <li>
-                    <Button variant="outline" onClick={()=>setIsClick(!isClick)}>Profile <ChevronDown className="inline-block"/></Button>
+              {
+                 user ? 
+               <>
+                <li >
 
-                    <ul className={`${!isClick &&'hidden'} space-y-2 mt-2`}>
+<div className=" flex justify-between items-center gap-3">
+    <Avatar>
+        <Avatar.Image alt={user?.name} src={user?.image} />
+      <Avatar.Fallback>{user?.name.charAt(2)}</Avatar.Fallback>
+      </Avatar>
+
+                    <Button variant="outline"  onClick={()=>setIsClick(!isClick)}>
+                        
+                        
+                        Profile <ChevronDown className="inline-block"/></Button>
+</div>
+                    <ul className={`${!isClick &&'hidden'} space-y-2 mt-2 flex flex-col items-center justify-end`}>
                         <li>Dashboard</li>
-                        <li><ArrowRightFromSquare className="inline-block"/> Logout</li>
+                        <li onClick={handleLogOut} className="cursor-pointer"><ArrowRightFromSquare className="inline-block"/> Logout</li>
                     </ul>
-                </li> */}
+
+                </li>
+               
+               </>
+               :<>
                 {/* if not loged in */}
-                <li><Link href={'/logIn'}>Login</Link> </li>
+                <li><Link href={'/logIn'}><Button className='rounded-md  bg-linear-to-tr from-purple-500 to-blue-500'>Login</Button></Link> </li>
+               </>
+              }
+               
                 
 
 

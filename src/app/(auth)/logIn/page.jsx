@@ -5,7 +5,10 @@ import { Button, Description, FieldError, Input, Label, TextField } from "@herou
 import { FcGoogle } from "react-icons/fc";
 import { Check } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { createAuthClient } from "better-auth/client";
 export default function LoginPage() {
+  const authClient=createAuthClient();
   const handleLogin =async(e) => {
     e.preventDefault();
 
@@ -16,10 +19,21 @@ export default function LoginPage() {
     email: userData.email,
     password: userData.password,
    
-    callbackURL: '/all-pets',
+    callbackURL: '/',
     });
-
-    //console.log(data,error);
+    if (data) {
+      toast.success('Log In Successfull');
+      return
+}
+if (error) {
+  toast.error(error.message);
+  return
+}
+  };
+  const handleGoogleLogIn=async()=>{
+    await authClient.signIn.social({
+      provider: "google",
+    })
   };
 
   return (
@@ -53,12 +67,12 @@ export default function LoginPage() {
       </TextField>
       <TextField
         isRequired
-        minLength={8}
+        minLength={6}
         name="password"
         type="password"
         validate={(value) => {
-          if (value.length < 8) {
-            return "Password must be at least 8 characters";
+          if (value.length < 6) {
+            return "Password must be at least 6 characters";
           }
           if (!/[A-Z]/.test(value)) {
             return "Password must contain at least one uppercase letter";
@@ -100,6 +114,7 @@ export default function LoginPage() {
         <Button
           variant="bordered"
           className="w-full text-blue-500"
+          onClick={handleGoogleLogIn}
         >
          <FcGoogle></FcGoogle> Continue with Google
         </Button>

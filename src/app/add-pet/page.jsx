@@ -1,6 +1,10 @@
 'use client'
+import { useSession } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 export default function AddPet() {
+   const {data}=useSession();
+      const user=data?.user;
+      //console.log(data?.user)
     const handleAddPet=async(e)=>{
         e.preventDefault();
         const formdata=new FormData(e.currentTarget);
@@ -152,7 +156,7 @@ export default function AddPet() {
             <input
               type="email"
               name="ownerEmail"
-              value="user@example.com"
+              defaultValue={user?.email}
               readOnly
               className="w-full rounded-lg border bg-gray-100 px-4 py-3 cursor-not-allowed"
             />

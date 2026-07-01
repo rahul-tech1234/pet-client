@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 export function SingleCard({pet}) {
   const {_id,image,petName,description,fee,location}=pet;
-  console.log(image,'pet')
+  //console.log(image,'pet')
   return (
     <Card className="w-full flex flex-col justify-center items-center transition-transform duration-500 hover:scale-105">
       <div className="relative w-full h-52 overflow-hidden rounded-t-2xl">
