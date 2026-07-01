@@ -2,6 +2,7 @@
 
 import {AlertDialog, Button} from "@heroui/react";
 import {TrashBin} from '@gravity-ui/icons';
+import toast from "react-hot-toast";
 export function DeleteAltert({data}) {
      const {peckDate,price,Name,image,description,_id}=data;
      const handleDelete=async()=>{
@@ -12,7 +13,8 @@ export function DeleteAltert({data}) {
             }
         });
         const data=await res.json(); 
-        console.log(data)
+        toast.success('Delete This Successfully')
+        //console.log(data)
      }
   return (
     <AlertDialog>

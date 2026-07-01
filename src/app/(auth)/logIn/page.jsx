@@ -1,5 +1,5 @@
 "use client";
-
+import {Eye,EyeSlash} from '@gravity-ui/icons';
 import Link from "next/link";
 import { Button, Description, FieldError, Input, Label, TextField } from "@heroui/react";
 import { FcGoogle } from "react-icons/fc";
@@ -7,7 +7,9 @@ import { Check } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { createAuthClient } from "better-auth/client";
+import { useState } from "react";
 export default function LoginPage() {
+  const [isVisible,setIsVisible]=useState(false);
   const authClient=createAuthClient();
   const handleLogin =async(e) => {
     e.preventDefault();
@@ -66,10 +68,11 @@ if (error) {
         <FieldError />
       </TextField>
       <TextField
+      className='relative'
         isRequired
         minLength={6}
         name="password"
-        type="password"
+          type={isVisible ?'text':'password'}
         validate={(value) => {
           if (value.length < 6) {
             return "Password must be at least 6 characters";
@@ -85,6 +88,7 @@ if (error) {
       >
         <Label>Password</Label>
         <Input placeholder="Enter your password" />
+        <span onClick={()=>setIsVisible(!isVisible)} className="absolute top-8 right-4 cursor-pointer">{isVisible ?<Eye></Eye>:<EyeSlash></EyeSlash>}</span>
         <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { authClient, useSession } from "@/lib/auth-client";
 import { Avatar, Button } from "@heroui/react";
 import { ChevronDown } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 const Navbar = () => {
     const [mobile,setMobilte]=useState(false);
     const [isClick,setIsClick]=useState(false);
@@ -62,6 +63,7 @@ const Navbar = () => {
                         
                         
                         Profile <ChevronDown className="inline-block"/></Button>
+                       <ThemeToggle></ThemeToggle> 
 </div>
                     <ul className={`${!isClick &&'hidden'} space-y-2 mt-2 flex flex-col items-center justify-end`}>
                         <li>Dashboard</li>

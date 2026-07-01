@@ -6,9 +6,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import {Eye,EyeSlash} from '@gravity-ui/icons';
 export default function SignUp() {
     const [error, setError] = useState(false);
     const route=useRouter();
+    const [isVisible,setIsVisible]=useState(false);
+    const [isOpen,setIsOpen]=useState(false);
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -107,9 +110,10 @@ console.log(data,error)
 
    <TextField
         isRequired
+        className='relative'
         minLength={6}
         name="password"
-        type="password"
+        type={isVisible ?'text':'password'}
         validate={(value) => {
           if (value.length <6 ) {
             return "Password must be at least 6 characters";
@@ -125,9 +129,12 @@ console.log(data,error)
           }
           return null;
         }}
+        
       >
+        
         <Label>Password</Label>
-        <Input placeholder="Enter your password" />
+        <Input placeholder="Enter your password"/>
+        <span onClick={()=>setIsVisible(!isVisible)} className="absolute top-8 right-4 cursor-pointer">{isVisible ?<Eye></Eye>:<EyeSlash></EyeSlash>}</span>
         <Description>Must be at least 6 haracters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>
@@ -136,8 +143,9 @@ console.log(data,error)
       <TextField
         isRequired
         minLength={6}
+        className='relative'
         name="confirmPassword"
-        type="password"
+        type={isOpen?'text':'password'}
         validate={(value) => {
           if (value.length < 6) {
             return "Password must be at least 6 characters";
@@ -157,6 +165,7 @@ console.log(data,error)
       >
         <Label>Confirm Password</Label>
         <Input placeholder="Enter your password" />
+         <span onClick={()=>setIsOpen(!isOpen)} className="absolute top-8 right-4 cursor-pointer">{isOpen ?<Eye></Eye>:<EyeSlash></EyeSlash>}</span>
         <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>

@@ -1,6 +1,7 @@
 "use client";
 import {PencilToSquare} from '@gravity-ui/icons';
 import {Button, Input, Label, Modal, Surface, TextField} from "@heroui/react";
+import toast from 'react-hot-toast';
 
 export function EditModal({data}) {
    const {_id}=data;
@@ -17,7 +18,8 @@ export function EditModal({data}) {
             body: JSON.stringify(petData)
         })
         const UpdateData=await res.json()
-        console.log(UpdateData)
+        toast.success('Update Successfull')
+        //console.log(UpdateData)
     }
     
   return (

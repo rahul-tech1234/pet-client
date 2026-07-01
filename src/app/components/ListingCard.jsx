@@ -4,6 +4,7 @@ import {CircleDollar} from '@gravity-ui/icons';
 import {Calendar} from '@gravity-ui/icons';
 import { DeleteAltert } from "./DeleteAlert";
 import { EditModal } from "./EditModal";
+import { RequestModal } from "./RequestModal";
 export function ListingCard({data}) {
    const {peckDate,price,Name,image,description}=data;
     //console.log(data)
@@ -43,7 +44,7 @@ export function ListingCard({data}) {
             <EditModal data={data}></EditModal>
           <Button className='rounded-md bg-linear-to-tr from-purple-500 to-blue-500'>Show More </Button>
           <DeleteAltert data={data}></DeleteAltert>
-           <Button variant="outline" className='rounded-md'>Request </Button>
+           <RequestModal data={data}></RequestModal>
           </div>
         </div>
         </Card.Footer>
