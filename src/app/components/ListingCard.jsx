@@ -1,24 +1,24 @@
-import {Button, Card, CloseButton} from "@heroui/react";
+import {Button, Card} from "@heroui/react";
 import Image from "next/image";
 import {CircleDollar} from '@gravity-ui/icons';
-import {TrashBin} from '@gravity-ui/icons';
-import {PencilToSquare} from '@gravity-ui/icons';
 import {Calendar} from '@gravity-ui/icons';
+import { DeleteAltert } from "./DeleteAlert";
+import { EditModal } from "./EditModal";
 export function ListingCard({data}) {
    const {peckDate,price,Name,image,description}=data;
     //console.log(data)
     const date=new Date(peckDate).toLocaleDateString('en-GB')
 
   return (
-    <Card className="w-full gap-9 items-stretch md:flex-row">
-      <div className="relative h-[140px] w-full shrink-0 overflow-hidden rounded-2xl sm:h-[120px] sm:w-[120px]">
+    <Card className="w-full gap-5 flex flex-col">
+      <div className="">
         <Image
           alt={Name}
-          className="pointer-events-none absolute inset-0 h-full w-full scale-125 object-cover select-none"
+          className="w-full object-cover rounded-md "
           loading="lazy"
           src={image}
-          width={300}
-          height={300}
+          width={150}
+          height={150}
         />
       </div>
       <div className="flex flex-1 flex-col gap-3">
@@ -29,20 +29,23 @@ export function ListingCard({data}) {
           </Card.Description>
           
         </Card.Header>
-        <Card.Footer className="mt-auto flex w-full flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-5">
+        <Card.Footer className="">
+        <div className='space-y-3'> 
+              <div className="flex items-center gap-5">
             
                 <span className=" font-medium  text-green-500 "><CircleDollar className="inline-block mr-3" />{price}</span>
                 <hr className=" w-px h-5 bg-gray-500"/>
            
-            <span className="text-xs text-green-500"><Calendar className="inline-block mr-3"/>{date}</span>
+            <span className="text-xs text-green-500 font-medium"><Calendar className="inline-block mr-3"/>{date}</span>
           </div>
         
-          <div>
-            <Button><PencilToSquare></PencilToSquare>Edit</Button>
-          <Button>Show More </Button>
-          <Button variant={'danger'} className="rounded-md"> <TrashBin  />Delete </Button>
+          <div className="grid grid-cols-2 justify-between items-center gap-5">
+            <EditModal data={data}></EditModal>
+          <Button className='rounded-md bg-linear-to-tr from-purple-500 to-blue-500'>Show More </Button>
+          <DeleteAltert data={data}></DeleteAltert>
+           <Button variant="outline" className='rounded-md'>Request </Button>
           </div>
+        </div>
         </Card.Footer>
       </div>
     </Card>

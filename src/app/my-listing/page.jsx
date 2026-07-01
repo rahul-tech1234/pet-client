@@ -13,7 +13,7 @@ const MyListing = async() => {
     return (
         <div>
            <h1 className="text-center mb-5 font-bold text-gray-400 text-3xl">My Listing</h1> 
-           <div className="space-y-4">
+           <div className="space-y-4 grid grid-cols-3 gap-5">
             {
                lisgtingData.length==0?
                <>No data  Myn Listing</>:
