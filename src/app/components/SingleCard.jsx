@@ -12,7 +12,8 @@ export function SingleCard({pet}) {
   <Image
     src={image}
     alt={petName}
-    fill
+    width={300}
+    height={300}
     className="object-cover"
   />
 </div>

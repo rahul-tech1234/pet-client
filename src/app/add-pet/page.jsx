@@ -1,14 +1,18 @@
 'use client'
 import { useSession } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
 export default function AddPet() {
+  const router=useRouter();
    const {data}=useSession();
       const user=data?.user;
       //console.log(data?.user)
     const handleAddPet=async(e)=>{
         e.preventDefault();
         const formdata=new FormData(e.currentTarget);
-        const petData=Object.fromEntries(formdata.entries())
+        const petData=Object.fromEntries(formdata.entries());
+        petData.userId=user?.id;
+        console.log(petData)
         const res=await fetch('http://localhost:5000/pet',{
           method: 'POST',
           headers: {
@@ -17,7 +21,11 @@ export default function AddPet() {
           body: JSON.stringify(petData)
         })
         const data=await res.json();
-        console.log(data,'petdata clientside');
+        if(res.ok){
+          router.push('/my-listing');
+        }
+        
+        //console.log(data,'petdata clientside');
     }
    
     return (
@@ -175,7 +183,7 @@ export default function AddPet() {
 
           {/* Submit */}
           <div className="md:col-span-2">
-           <Button className='rounded-sm bg-linear-to-tr from-purple-500 to-blue-500 w-full'>Adopt</Button>
+           <Button type='submit' className='rounded-sm bg-linear-to-tr from-purple-500 to-blue-500 w-full'>Adopt</Button>
           </div>
         </form>
       </div>

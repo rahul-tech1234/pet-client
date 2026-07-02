@@ -89,7 +89,7 @@ if (error) {
         <Label>Password</Label>
         <Input placeholder="Enter your password" />
         <span onClick={()=>setIsVisible(!isVisible)} className="absolute top-8 right-4 cursor-pointer">{isVisible ?<Eye></Eye>:<EyeSlash></EyeSlash>}</span>
-        <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
+        <Description>Must be at least 6 characters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>
 

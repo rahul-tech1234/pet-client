@@ -15,7 +15,6 @@ export const getLimitlData = async () => {
     return pet;
 };
 
-
   
 // export const addPet = async (petData) => {
 //     const res = await fetch(`http://localhost:5000/pet`, {
