@@ -1,7 +1,8 @@
 'use client'
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export default function AddPet() {
   const router=useRouter();
    const {data}=useSession();
@@ -13,16 +14,21 @@ export default function AddPet() {
         const petData=Object.fromEntries(formdata.entries());
         petData.userId=user?.id;
         console.log(petData)
+        const {data: tokenData}=authClient.token()
         const res=await fetch('http://localhost:5000/pet',{
           method: 'POST',
           headers: {
             'content-type': 'application/json',
+            authorization:`Bearer ${tokenData?.token}`
           },
           body: JSON.stringify(petData)
         })
         const data=await res.json();
         if(res.ok){
+          toast.success('Your pet add successfully')
           router.push('/my-listing');
+        }else if (!res.ok) {
+          toast.error('Please enter valid Info')
         }
         
         //console.log(data,'petdata clientside');

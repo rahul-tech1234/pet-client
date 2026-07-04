@@ -2,12 +2,19 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { ListingCard } from "../components/ListingCard";
 const MyListing = async() => {
+    const token=await auth.api.getToken({
+           headers: await headers()
+       })
    const session=await auth.api.getSession({
     headers: await headers()
    })
    const user=session?.user;
   //console.log(user?.id)
-     const res=await fetch(`http://localhost:5000/pets/${user?.id}`);               
+     const res=await fetch(`http://localhost:5000/pets/${user?.id}`,{
+         headers: {
+                authorization: `Bearer ${token.token}`,
+            },
+     });               
      const lisgtingData=await res.json();
      //console.log(lisgtingData,'data')
      //onsole.log("user:", lisgtingData);

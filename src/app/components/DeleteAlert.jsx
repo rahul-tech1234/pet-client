@@ -3,14 +3,18 @@
 import {AlertDialog, Button} from "@heroui/react";
 import {TrashBin} from '@gravity-ui/icons';
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 export function DeleteAltert({data}) {
  // console.log(data)  
+
    const {peckDate,fee,petName,image,description,_id}=data;
      const handleDelete=async()=>{
+      const {data: tokenData}=authClient.token();
         const res=await fetch(`http://localhost:5000/pet/${_id}`,{
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',
+                authorization:`Bearer ${tokenData?.token}`
             }
         });
         const data=await res.json(); 
