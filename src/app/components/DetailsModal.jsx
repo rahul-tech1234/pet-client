@@ -5,10 +5,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 export function DetailsModal({pet}) {
   const {data: session}=authClient.useSession();
+  const user=session?.user;
   const [peckDate,setPeckDate]=useState(null);
   const [description,setDescription]=useState('');
   //console.log(description)
-  const user=session?.user;
   //console.log(user)
   const {petName,fee,image,_id}=pet
   const handleAdapt=async()=>{

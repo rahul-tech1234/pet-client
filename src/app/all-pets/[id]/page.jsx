@@ -1,11 +1,23 @@
 
 import DetailsCard from "@/app/components/DetailsCard";
-import { getDataById } from "@/lib/data";
-
-
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 const DetailsModal = async({params}) => {
+    const token=await auth.api.getToken({
+        headers: await headers()
+    })
+    console.log(token)
     const {id}=await params;
-    const data=await getDataById(id)
+   
+       // console.log(token);
+        const res = await fetch(`http://localhost:5000/pet/${id}`, {
+            headers: {
+                authorization: `Bearer ${token.token}`,
+            },
+        });
+        const data = await res.json();
+
+    
 
         return (
         <div className="my-9  justify-between items-center gap-5">

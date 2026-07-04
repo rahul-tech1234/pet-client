@@ -4,9 +4,10 @@ import {AlertDialog, Button} from "@heroui/react";
 import {TrashBin} from '@gravity-ui/icons';
 import toast from "react-hot-toast";
 export function DeleteAltert({data}) {
-     const {peckDate,price,Name,image,description,_id}=data;
+ // console.log(data)  
+   const {peckDate,fee,petName,image,description,_id}=data;
      const handleDelete=async()=>{
-        const res=await fetch(`http://localhost:5000/adaption/${_id}`,{
+        const res=await fetch(`http://localhost:5000/pet/${_id}`,{
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json',
@@ -22,15 +23,13 @@ export function DeleteAltert({data}) {
       <AlertDialog.Backdrop>
         <AlertDialog.Container>
           <AlertDialog.Dialog className="sm:max-w-[400px]">
-            <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>Delete This Pet ?</AlertDialog.Heading>
+              <AlertDialog.Heading>Delete This Pet ? {petName}</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                This will permanently delete <strong className="text-xl">{Name}</strong> and all of its
-                data. This action cannot be undone.
+                {description}
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>

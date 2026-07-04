@@ -1,17 +1,28 @@
-import {Badge, Button, Card, Chip} from "@heroui/react";
+import { Button, Card, Chip} from "@heroui/react";
 import Image from "next/image";
 import {CircleDollar} from '@gravity-ui/icons';
 import { DeleteAltert } from "./DeleteAlert";
 import { EditModal } from "./EditModal";
 import { RequestModal } from "./RequestModal";
-export function ListingCard({data}) {
-   const {petName,fee,gender,image,description}=data;
-    console.log(data)
-
-
+import Link from "next/link";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+//import { authClient } from "@/lib/auth-client";
+export async function ListingCard({data}) {
+   const {petName,fee,gender,image,description,_id}=data;
+ const session = await auth.api.getSession({
+         headers: await headers(),
+     });
+     //console.log(session?.user)
+     //6a4624ad00e777c13620ecd7
+     //6a4624ad00e777c13620ecd7
+     console.log(_id)
+  const res= await fetch(`http://localhost:5000/adaption/${_id}`);
+  const adapData=await res.json();
+  console.log(adapData[0].price);
   return (
     <Card className="w-full gap-5 flex flex-col">
-      <div className="relative bg-amber-500">
+      <div className="relative">
         <Image
           alt={petName}
           className="w-full object-cover h-[40vh] rounded-md "
@@ -20,7 +31,7 @@ export function ListingCard({data}) {
           width={150}
           height={150}
         />
-         <Chip color='success'>{gender}</Chip>
+         <Chip color="success" className="absolute top-3  right-3">{gender}</Chip>
       </div>
      
       <div className="flex flex-1 flex-col gap-3">
@@ -36,17 +47,11 @@ export function ListingCard({data}) {
         </Card.Header>
         <Card.Footer className="">
         <div className='space-y-3'> 
-              <div className="flex justify-between items-center gap-5">
-            
-                <span className=" font-medium  text-green-500 "><CircleDollar className="inline-block mr-3" />{fee}</span>
-                <hr className=" w-px h-5 bg-gray-500"/>
-           
-            <span className="text-xs text-green-500 font-medium">{gender}</span>
-          </div>
+             
         
           <div className="grid grid-cols-2 justify-between items-center gap-5">
             <EditModal data={data}></EditModal>
-          <Button className='rounded-md bg-linear-to-tr from-purple-500 to-blue-500'>Show More </Button>
+         <Link href={`/all-pets/${data?._id}`}> <Button className='rounded-md bg-linear-to-tr from-purple-500 to-blue-500'>Show More </Button></Link>
           <DeleteAltert data={data}></DeleteAltert>
            <RequestModal data={data}></RequestModal>
           </div>

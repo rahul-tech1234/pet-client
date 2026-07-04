@@ -1,9 +1,5 @@
 
-export const getDataById = async (id) => {
-    const res = await fetch(`${process.env.PET_SERVER}/pet/${id}`);
-    const data = await res.json();
-    return data;
-};
+
 export const getAllData = async () => {
     const res = await fetch(`${process.env.PET_SERVER}/pets`);
     const pets = await res.json();
@@ -15,7 +11,8 @@ export const getLimitlData = async () => {
     return pet;
 };
 
-  
+//const [stat, setStat] = useState("pending");
+
 // export const addPet = async (petData) => {
 //     const res = await fetch(`http://localhost:5000/pet`, {
 //         method: "POST",
