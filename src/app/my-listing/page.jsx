@@ -8,13 +8,13 @@ const MyListing = async() => {
    const session=await auth.api.getSession({
     headers: await headers()
    })
-   const user=session?.user;
+  const user=session?.user;
   //console.log(user?.id)
      const res=await fetch(`http://localhost:5000/pets/${user?.id}`,{
          headers: {
                 authorization: `Bearer ${token.token}`,
             },
-     });               
+     });             
      const lisgtingData=await res.json();
      //console.log(lisgtingData,'data')
      //onsole.log("user:", lisgtingData);

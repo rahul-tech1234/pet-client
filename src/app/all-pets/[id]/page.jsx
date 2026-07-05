@@ -6,7 +6,7 @@ const DetailsModal = async({params}) => {
     const token=await auth.api.getToken({
         headers: await headers()
     })
-    //onsole.log(token)
+    //console.log(token)
     const {id}=await params;
    
        // console.log(token);

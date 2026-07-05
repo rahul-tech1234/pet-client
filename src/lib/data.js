@@ -1,9 +1,8 @@
+export const getAllData = async (params) => {
+    const query = new URLSearchParams(params).toString();
 
-
-export const getAllData = async () => {
-    const res = await fetch(`${process.env.PET_SERVER}/pets`);
-    const pets = await res.json();
-    return pets;
+    const res = await fetch(`${process.env.PET_SERVER}/pets?${query}`);
+    return res.json();
 };
 export const getLimitlData = async () => {
     const res = await fetch(`${process.env.PET_SERVER}/pet`);

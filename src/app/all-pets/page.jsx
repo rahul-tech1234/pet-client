@@ -1,19 +1,24 @@
 import { getAllData } from "@/lib/data";
 import { SingleCard } from "../components/SingleCard";
-import FilterAndSort from "../components/FilterAndSort";
-const AllPet=async () => {
-    const pets=await getAllData();
-   
-
-
-
-    //console.log(pets);
+import SearchFilter from "../components/SearchFilter";
+import SortByPrice from "../components/SortByPrice";
+const AllPet=async ({searchParams}) => {
+  const pets = await getAllData({
+      petName: searchParams?.search || "",
+      price: searchParams?.price || "",
+  });  
     return (
         <div className=" mb-9">
             <h2 className="text-3xl font-bold text-center mb-8">
           All Pets
         </h2>
-             <FilterAndSort></FilterAndSort>   
+            
+              <div className='flex items-center justify-center gap-10 my-15'>
+                <SearchFilter></SearchFilter>   
+             <SortByPrice></SortByPrice>
+             </div> 
+              {/* <SearchFilter></SearchFilter>   
+             <SortByPrice></SortByPrice> */}
 
 
             <div className="grid md:grid-cols-3 gap-5">

@@ -24,6 +24,7 @@ export default function AddPet() {
           body: JSON.stringify(petData)
         })
         const data=await res.json();
+        console.log(data)
         if(res.ok){
           toast.success('Your pet add successfully')
           router.push('/my-listing');
@@ -157,7 +158,7 @@ export default function AddPet() {
             <label className="block mb-2 font-medium">Adoption Fee</label>
             <input
               type="number"
-              name="fee"
+              name="price"
               min={1}
               placeholder="1000"
               className="w-full rounded-lg border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500"

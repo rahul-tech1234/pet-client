@@ -2,7 +2,7 @@ import { getLimitlData } from "@/lib/data";
 import Banner from "./components/Banner";
 import { SingleCard } from "./components/SingleCard";
 import Static from "./components/Static";
-import FilterAndSort from "./components/FilterAndSort";
+
 
 export default async function Home() {
     const pets = await getLimitlData();
@@ -11,7 +11,7 @@ export default async function Home() {
     // console.log(data);
     return (
         <div>
-            <FilterAndSort></FilterAndSort>
+
             <Banner></Banner>
 
             <div className="grid md:grid-cols-3 gap-5">

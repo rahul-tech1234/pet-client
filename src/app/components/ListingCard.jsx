@@ -9,17 +9,16 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 //import { authClient } from "@/lib/auth-client";
 export async function ListingCard({data}) {
+  
    const {petName,fee,gender,image,description,_id}=data;
  const session = await auth.api.getSession({
          headers: await headers(),
      });
-     //console.log(session?.user)
-     //6a4624ad00e777c13620ecd7
-     //6a4624ad00e777c13620ecd7
-     console.log(_id)
-  const res= await fetch(`http://localhost:5000/adaption/${_id}`);
-  const adapData=await res.json();
-  console.log(adapData[0].price);
+     
+  // const res= await fetch(`http://localhost:5000/adaption/${_id}`);
+  // const adapData=await res.json();
+  //console.log(adapData,'adapData');
+
   return (
     <Card className="w-full gap-5 flex flex-col">
       <div className="relative">
