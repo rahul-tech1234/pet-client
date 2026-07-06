@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { jwt } from "better-auth/plugins";
 
-const client = new MongoClient(process.env.MONGO_DB_URL);
+const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db("pet-platform");
 
 export const auth = betterAuth({
