@@ -101,7 +101,7 @@ const Navbar = () => {
 
                         {/* Profile Dropdown */}
                         {isClick && (
-                            <ul className="absolute right-0 top-14 w-44 rounded-lg border bg-white dark:bg-neutral-900 shadow-lg p-3 space-y-3">
+                            <ul className="absolute right-0 top-14 w-44 rounded-lg border bg-white dark:bg-neutral-900 shadow-lg p-3 space-y-3 z-20">
                                 <li>
                                     <p className="font-semibold">{user.name}</p>
                                     <p className="text-sm text-gray-500">
