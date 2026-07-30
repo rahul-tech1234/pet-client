@@ -12,13 +12,16 @@ export function DeleteAltert({ data }) {
     const handleDelete = async () => {
         const { data: tokenData, error } = await authClient.token();
         console.log(tokenData);
-        const res = await fetch(`http://localhost:5000/pet/${_id}`, {
-            method: "DELETE",
-            headers: {
-                "content-type": "application/json",
-                authorization: `Bearer ${tokenData?.token}`,
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_PET_SERVER}/pet/${_id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                    authorization: `Bearer ${tokenData?.token}`,
+                },
             },
-        });
+        );
         const data = await res.json();
         console.log("delete", data);
         if (res.ok) {

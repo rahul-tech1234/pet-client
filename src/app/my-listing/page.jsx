@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { ListingCard } from "../components/ListingCard";
+import State from "../components/State";
 
 const MyListing = async () => {
     const requestHeaders = await headers();
@@ -11,6 +12,8 @@ const MyListing = async () => {
     ]);
 
     const user = session?.user;
+    const email = user?.email;
+    console.log(email);
 
     if (!user) {
         return (
@@ -22,7 +25,7 @@ const MyListing = async () => {
         );
     }
 
-    const res = await fetch(`${process.env.PET_SERVER}/my-pets`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_PET_SERVER}/my-pets`, {
         headers: {
             authorization: `Bearer ${token?.token}`,
         },
@@ -33,12 +36,22 @@ const MyListing = async () => {
         throw new Error("Failed to fetch listings.");
     }
     const listingData = await res.json();
+    const stateCount = await fetch(
+        `${process.env.NEXT_PUBLIC_PET_SERVER}/owner-state-count/${email}`,
+    );
+
+    const stats = await stateCount.json();
+
+    console.log("stats list", stats);
 
     return (
         <section className="space-y-8">
             <h1 className="text-center text-3xl font-bold text-gray-400">
                 My Listing
             </h1>
+            <div>
+                <State stats={stats}></State>
+            </div>
 
             {listingData.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20">

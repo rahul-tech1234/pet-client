@@ -10,10 +10,16 @@ import { auth } from "@/lib/auth";
 //import { authClient } from "@/lib/auth-client";
 export async function ListingCard({ data }) {
     const { petName, fee, gender, image, description, _id } = data;
-    console.log(image);
+    //console.log(_id, "id", data);
     const session = await auth.api.getSession({
         headers: await headers(),
     });
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_PET_SERVER}/status-update/${_id}`,
+    );
+    const getPet = await res.json();
+    const satus = getPet?.status;
+    //console.log(getPet.status);
 
     // const res= await fetch(`https://pet-server-psi.vercel.app/adaption/${_id}`);
     // const adapData=await res.json();
@@ -60,7 +66,10 @@ export async function ListingCard({ data }) {
                                 </Button>
                             </Link>
                             <DeleteAltert data={data}></DeleteAltert>
-                            <RequestModal data={data}></RequestModal>
+                            <RequestModal
+                                data={data}
+                                satus={satus}
+                            ></RequestModal>
                         </div>
                     </div>
                 </Card.Footer>

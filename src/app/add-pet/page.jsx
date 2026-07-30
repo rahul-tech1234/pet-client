@@ -6,6 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AddPet() {
+    console.log(`url: ${process.env.NEXT_PUBLIC_PET_SERVER}`);
     const router = useRouter();
 
     const { data: session, isPending } = useSession();
@@ -31,14 +32,17 @@ export default function AddPet() {
                 userId: user.id,
             };
 
-            const res = await fetch(`http://localhost:5000/pet`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${session?.token}`,
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_PET_SERVER}/pet`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${session?.token}`,
+                    },
+                    body: JSON.stringify(petData),
                 },
-                body: JSON.stringify(petData),
-            });
+            );
 
             const result = await res.json();
 

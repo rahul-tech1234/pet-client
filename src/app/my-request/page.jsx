@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Image from "next/image";
+import State from "../components/State";
 
 const MyRequest = async () => {
     const requestHeaders = await headers();
@@ -11,7 +12,17 @@ const MyRequest = async () => {
     ]);
 
     const user = session?.user;
-    console.log(`user: ${token}`);
+
+    const stateCount = await fetch(
+        `${process.env.NEXT_PUBLIC_PET_SERVER}/client-state-count/${user?.id}`,
+    );
+
+    const stats = await stateCount.json();
+   
+      console.log("stats", stats);
+
+    //  console.log("user", user);
+    // console.log(`user: ${token}`);
 
     if (!user) {
         return (
@@ -23,12 +34,15 @@ const MyRequest = async () => {
         );
     }
 
-    const res = await fetch(`${process.env.PET_SERVER}/my-adoption-request`, {
-        headers: {
-            authorization: `Bearer ${token?.token}`,
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_PET_SERVER}/my-adoption-request/${user?.id}`,
+        {
+            headers: {
+                authorization: `Bearer ${token?.token}`,
+            },
+            cache: "no-store",
         },
-        cache: "no-store",
-    });
+    );
 
     if (!res.ok) {
         throw new Error("Failed to fetch requests.");
@@ -41,6 +55,7 @@ const MyRequest = async () => {
             <h1 className="text-center text-3xl font-bold text-gray-400">
                 My Requests
             </h1>
+            <State stats={stats}></State>
 
             {requests.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20">

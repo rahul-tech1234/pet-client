@@ -6,6 +6,7 @@ const AllPet = async ({ searchParams }) => {
     const resolvedSearchParams = await searchParams;
 
     const pets = await getAllData(resolvedSearchParams);
+    
     return (
         <div className=" mb-9">
             <h2 className="text-3xl font-bold text-center mb-8">All Pets</h2>

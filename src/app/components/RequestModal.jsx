@@ -4,13 +4,16 @@ import { Heart } from "@gravity-ui/icons";
 import { Button, Chip, Modal } from "@heroui/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-export function RequestModal({ data }) {
+export function RequestModal({ data, satus }) {
+    console.log(satus);
     const { userId } = data;
     const [stat, setStat] = useState();
     const [isClick, setIsClick] = useState("Pending");
-    console.log(isClick);
+    // console.log(isClick);
     const handleRequest = async (userId) => {
-        const res = await fetch(`http://localhost:5000/adaption/${userId}`);
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_PET_SERVER}/adaption/${userId}`,
+        );
         const getData = await res.json();
         setStat(getData);
         //return getData;
@@ -18,23 +21,26 @@ export function RequestModal({ data }) {
     // console.log(stat)
     //console.log('stat:',stat)
     const handleReject = async () => {
-        setIsClick("Reject");
-        await updateStatus("ejected");
+        //  setIsClick("Reject");
+        await updateStatus("rejected");
         toast.error("Reject this request");
     };
     const handleApprove = async () => {
-        setIsClick("Approve");
+        //  setIsClick("Approve");
         await updateStatus("approved");
         toast.success("Approve this request");
     };
     const updateStatus = async (status) => {
-        const res = await fetch(`http://localhost:5000/adoption/${data._id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_PET_SERVER}/adoption/${data._id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ status }),
             },
-            body: JSON.stringify({ status }),
-        });
+        );
 
         const result = await res.json();
         // console.log('result:',result);
@@ -62,9 +68,9 @@ export function RequestModal({ data }) {
                     <Modal.Dialog className="sm:max-w-[360px] relative">
                         <Chip
                             className={`absolute top-3 right-3`}
-                            color={`${isClick == "Pending" ? "warning" : isClick == "Approve" ? "success" : "danger"}`}
+                            color={`${satus === "pending" ? "warning" : satus === "approved" ? "success" : "danger"}`}
                         >
-                            {isClick}
+                            {satus}
                         </Chip>
                         <Modal.Header>
                             <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
@@ -76,7 +82,7 @@ export function RequestModal({ data }) {
                             <p>{stat?.description}</p>
                         </Modal.Body>
                         <Modal.Footer>
-                            {isClick == "Pending" && (
+                            {satus == "pending" && (
                                 <>
                                     <Button
                                         onClick={handleReject}

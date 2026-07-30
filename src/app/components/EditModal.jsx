@@ -12,14 +12,17 @@ export function EditModal({data}) {
         const formdata=new FormData(e.currentTarget);
         const petData=Object.fromEntries(formdata.entries());
         const {data: tokenData}=authClient.token()
-        const res=await fetch(`http://localhost:5000/pet/${_id}`,{
-            method: 'PATCH',
-            headers: {
-                'content-type':'application/json',
-                authorization:`Bearer ${tokenData?.token}`
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_PET_SERVER}/pet/${_id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "content-type": "application/json",
+                    authorization: `Bearer ${tokenData?.token}`,
+                },
+                body: JSON.stringify(petData),
             },
-            body: JSON.stringify(petData)
-        })
+        );
         const UpdateData=await res.json()
         toast.success('Update Successfull')
         //console.log(UpdateData)

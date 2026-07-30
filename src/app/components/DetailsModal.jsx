@@ -11,14 +11,16 @@ import {
 } from "@heroui/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-export function DetailsModal({ pet }) {
+export function DetailsModal({ pet, status }) {
+    const isDisabled = status === "approved" || status === "rejected";
+    console.log(`isDesable ${isDisabled}`);
+
     const { data: session } = authClient.useSession();
     const user = session?.user;
     const [peckDate, setPeckDate] = useState(null);
     const [description, setDescription] = useState("");
-    //console.log(description)
-    //console.log(user)
-    const { petName, fee, image, _id } = pet;
+    // console.log(pet);
+    const { petName, fee, image, _id, ownerEmail } = pet;
     const handleAdapt = async () => {
         const AdaptData = {
             userId: user?.id,
@@ -26,22 +28,30 @@ export function DetailsModal({ pet }) {
             Name: petName,
             price: fee,
             petId: _id,
+            ownerEmail,
             peckDate: new Date(peckDate),
             status: "pending",
             description,
         };
         //console.log(AdaptData)
 
-        const res = await fetch(`http://localhost:5000/adaption`, {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_PET_SERVER}/adaption`,
+            {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(AdaptData),
             },
-            body: JSON.stringify(AdaptData),
-        });
+        );
         const data = await res.json();
-        toast.success("Adapt this pet Successfully");
-        //console.log(data);
+        console.log(data);
+        if (data.insertedId) {
+            toast.success("Adoption request sent successfully!");
+        } else {
+            toast.error(data?.message);
+        }
     };
 
     return (
@@ -141,6 +151,7 @@ export function DetailsModal({ pet }) {
                             </Button>
                             <Button
                                 onClick={handleAdapt}
+                                isDisabled={isDisabled}
                                 className="rounded-sm bg-linear-to-tr from-purple-500 to-blue-500 w-full"
                             >
                                 Adopt

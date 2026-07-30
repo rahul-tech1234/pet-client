@@ -7,6 +7,13 @@ const DetailsModal = async ({ params }) => {
     });
     //console.log(token)
     const { id } = await params;
+    // console.log("params", id);
+    const getPetStatus = await fetch(
+        `${process.env.NEXT_PUBLIC_PET_SERVER}/status-consition/${id}`,
+    );
+    const findStatus = await getPetStatus.json();
+    const status = findStatus?.status;
+   // console.log(status, "id");
 
     // console.log(token);
     const res = await fetch(`https://pet-server-psi.vercel.app/pet/${id}`, {
@@ -19,7 +26,7 @@ const DetailsModal = async ({ params }) => {
     return (
         <div className="my-9  justify-between items-center gap-5">
             <div className="">
-                <DetailsCard pet={data}></DetailsCard>
+                <DetailsCard pet={data} status={status}></DetailsCard>
             </div>
         </div>
     );
